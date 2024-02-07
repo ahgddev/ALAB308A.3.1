@@ -4,12 +4,14 @@ import { central, db1, db2, db3, vault } from "./databases.js";
 let userDB = (database, value, uID) => {
   return new Promise((resolve, reject) => {
     resolve(database[value](uID));
+    reject("This ID not in this Database.");
 });
 }
 
 let userVault = (dbVault, uID) => {
   return new Promise((resolve, reject) => {
     resolve(dbVault(uID));
+    reject("This ID is not in this Vault.");
 });
 }
 
