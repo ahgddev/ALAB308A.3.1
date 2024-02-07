@@ -16,13 +16,9 @@ let userVault = (dbVault, uID) => {
 }
 
 let userDataProcess = (dataDB) => {
-  return new Promise((resolve, reject) => {
-    resolve(
-      {name: dataDB[0].username,
-      }
-    );
-    reject("This ID is not in this Vault.");
-});
+  let user = {name: dataDB.username,
+  }
+  return user
 }
 
 async function getUserData(id) {
@@ -36,14 +32,14 @@ async function getUserData(id) {
     const returnedValue = await central(id);
     // let dbresult = await userDB(dbs, returnedValue, id);
     // let vaultresult = await userVault(vault, id);
-    let userDataPromise = async () => {
-      let promise = await Promise.all([
+      let userDataPromise = await Promise.all([
         userDB(dbs, returnedValue, id),
         userVault(vault, id)
-      ]);
+      ]).then(([db, vault]) => {
+        userDataProcess(db)
+      });
       // console.log(promise)
       // await userDataProcess().then(promise => userDataProcess(promise))
-    };
     userDataPromise();
   } catch (error) {
     console.log("User does not exist")
