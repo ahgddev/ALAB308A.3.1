@@ -26,7 +26,7 @@ let userDataProcess = (dataDB, vaultDB, ID) => {
     website: dataDB.website,
     company: dataDB.company
   }
-  return console.log(user)
+  return user
 }
 
 async function getUserData(id) {
@@ -35,26 +35,28 @@ async function getUserData(id) {
     db2: db2,
     db3: db3
   };
+  //Part 1: The Scenario
+  // const centralValue = await central(id);
+  // const DBValue = await db1(id);
+  // const vaultValue = await vault(id);
+  // console.log(centralValue, DBValue, vaultValue)
+
+  
+  //Part 2: The Implementation
   let checkID = id;
-  // Part 1: The Scenario
   try {
     const returnedValue = await central(id);
-    // let dbresult = await userDB(dbs, returnedValue, id);
-    // let vaultresult = await userVault(vault, id);
-      let userDataPromise = await Promise.all([
+      await Promise.all([
         userDB(dbs, returnedValue, id),
         userVault(vault, id)
       ]).then(([db, vault]) => {
         userDataProcess(db, vault, checkID)
       });
-      // console.log(promise)
-      // await userDataProcess().then(promise => userDataProcess(promise))
-    userDataPromise();
   } catch (error) {
     console.log("User does not exist")
   }
 }
 
-// Async function to perform execution of all promise
-
-getUserData(1)
+// getUserData(11)
+// getUserData(1)
+getUserData(3)
