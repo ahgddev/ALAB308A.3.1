@@ -15,10 +15,18 @@ let userVault = (dbVault, uID) => {
 });
 }
 
-let userDataProcess = (dataDB) => {
-  let user = {name: dataDB.username,
+let userDataProcess = (dataDB, vaultDB, ID) => {
+  let user = {
+    id: ID,
+    name: vaultDB.name,
+    username: dataDB.username,
+    email: vaultDB.email,
+    address: vaultDB.address,
+    phone: vaultDB.phone,
+    website: dataDB.website,
+    company: dataDB.company
   }
-  return user
+  return console.log(user)
 }
 
 async function getUserData(id) {
@@ -27,6 +35,7 @@ async function getUserData(id) {
     db2: db2,
     db3: db3
   };
+  let checkID = id;
   // Part 1: The Scenario
   try {
     const returnedValue = await central(id);
@@ -36,7 +45,7 @@ async function getUserData(id) {
         userDB(dbs, returnedValue, id),
         userVault(vault, id)
       ]).then(([db, vault]) => {
-        userDataProcess(db)
+        userDataProcess(db, vault, checkID)
       });
       // console.log(promise)
       // await userDataProcess().then(promise => userDataProcess(promise))
