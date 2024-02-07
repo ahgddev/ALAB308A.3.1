@@ -7,6 +7,12 @@ let userDB = (database, value, uID) => {
 });
 }
 
+let userVault = (dbVault, uID) => {
+  return new Promise((resolve, reject) => {
+    resolve(dbVault(uID));
+});
+}
+
 async function getUserData(id) {
   const dbs = {
     db1: db1,
@@ -16,8 +22,8 @@ async function getUserData(id) {
   // Part 1: The Scenario
   try {
     const returnedValue = await central(id);
-    userDB(dbs, returnedValue, id);
-    let userVault = await vault(id);
+    let dbresult = await userDB(dbs, returnedValue, id);
+    let vaultresult = await userVault(vault, id);
     // let promiseExecution = async () => {
     //   let promise = await Promise.all([
     //     firstPromise(),
@@ -25,7 +31,7 @@ async function getUserData(id) {
     //   ]);
     //   console.log(promise);
     // };
-    console.log(userDB, userVault);
+    console.log(dbresult, vaultresult);
   } catch (error) {
     console.log("User does not exist")
   }
