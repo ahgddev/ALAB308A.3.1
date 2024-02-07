@@ -24,16 +24,16 @@ async function getUserData(id) {
   // Part 1: The Scenario
   try {
     const returnedValue = await central(id);
-    let dbresult = await userDB(dbs, returnedValue, id);
-    let vaultresult = await userVault(vault, id);
-    // let promiseExecution = async () => {
-    //   let promise = await Promise.all([
-    //     firstPromise(),
-    //     secondPromise(),
-    //   ]);
-    //   console.log(promise);
-    // };
-    console.log(dbresult, vaultresult);
+    // let dbresult = await userDB(dbs, returnedValue, id);
+    // let vaultresult = await userVault(vault, id);
+    let userDataPromise = async () => {
+      let promise = await Promise.all([
+        userDB(dbs, returnedValue, id),
+        await userVault(vault, id),
+      ]);
+      console.log(promise);
+    };
+    userDataPromise()
   } catch (error) {
     console.log("User does not exist")
   }
