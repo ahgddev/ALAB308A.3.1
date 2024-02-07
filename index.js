@@ -29,7 +29,7 @@ async function getUserData(id) {
     let userDataPromise = async () => {
       let promise = await Promise.all([
         userDB(dbs, returnedValue, id),
-        await userVault(vault, id),
+        userVault(vault, id),
       ]);
       console.log(promise);
     };
